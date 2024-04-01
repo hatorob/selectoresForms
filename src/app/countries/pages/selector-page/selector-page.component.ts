@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CountriesService } from '../../services/countries.service';
+import { Region } from '../../interfaces/country.interfaces';
 
 @Component({
   selector: 'countries-selector-page',
@@ -15,8 +17,17 @@ export class SelectorPageComponent {
   })
 
   //! Injectación de FormBuilder para trabajar más comodo formsReactives
-  constructor( private fb: FormBuilder ) {
+  constructor(
+    private fb: FormBuilder,
+    private countriesServices: CountriesService
+  ) {
 
   }
+
+  get regions(): Region[] {
+    return this.countriesServices.regions;
+  }
+
+
 
 }
