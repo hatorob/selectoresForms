@@ -33,9 +33,26 @@ export class CountriesService {
                       borders: country.borders ?? []
                   }))
                   ),
-                  tap( response => console.log("tap desde service",response))
+                  //tap( response => console.log("tap desde service",response))
                 );
 
+  }
+
+  public getCountryByCode = ( countryCode: string ): Observable<SmallCountry> => {
+    if( !countryCode ) return of();
+    return this.http.get<Country>(`${this.URL}/alpha/${countryCode}?fields=name,cca3,borders`)
+                .pipe(
+                  map( country => {
+                    //const dataArray = [...country];
+                    //console.log(dataArray[0]);
+                    console.log(country);
+                    return {
+                    name: country.name?.common,
+                    cca3: country.cca3,
+                    borders: country.borders ?? []
+                    }
+                  })
+                )
   }
 
 }

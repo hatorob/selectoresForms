@@ -18,8 +18,19 @@
     <div class="col">
       <label class="form-label"> Países: </label>
       <select formControlName="country" class="form-control">
-        <option value="">Seleccione continente</option>
+        <option value="">Seleccione países</option>
         <option [value]="country.cca3" *ngFor="let country of countriesByRegion"> {{ country.name }} </option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Borders -->
+  <div class="row mb-3" *ngIf="bordersByCountry">
+    <div class="col">
+      <label class="form-label"> Fronteras: </label>
+      <select formControlName="border" class="form-control">
+        <option value="">Seleccione frontera</option>
+        <option [value]="border" *ngFor="let border of bordersByCountry"> {{ border }} </option>
       </select>
     </div>
   </div>
