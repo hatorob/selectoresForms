@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CountriesService } from '../../services/countries.service';
 import { Region } from '../../interfaces/country.interfaces';
+import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'countries-selector-page',
@@ -37,9 +38,12 @@ export class SelectorPageComponent implements OnInit {
 
     //this.myForm.controls['region']!.valueChanges
     this.myForm.get('region')!.valueChanges
-        .subscribe( region => {
-          console.log("Detectando el cambio del formulario con OnInit",{region});
-
+        .pipe(
+          //switchMap( region => this.countriesServices.getCountriesByRegion(region) )
+          switchMap( this.countriesServices.getCountriesByRegion )
+        )
+        .subscribe( countries => {
+          console.log({countries});
         });
 
   }
