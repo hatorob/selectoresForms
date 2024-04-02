@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Country, Region, SmallCountry } from '../interfaces/country.interfaces';
 import { HttpClient } from '@angular/common/http';
-import { Observable, of, tap } from 'rxjs';
+import { Observable, map, of, tap } from 'rxjs';
 
 
 
@@ -25,8 +25,14 @@ export class CountriesService {
   public getCountriesByRegion = ( region: Region ): Observable<SmallCountry[]> => {
 
     if( !region ) return of([]);
-    return this.http.get<SmallCountry[]>(`${this.URL}/region/${region}?fields=name,cca3,borders`)
+    return this.http.get<Country[]>(`${this.URL}/region/${region}?fields=name,cca3,borders`)
                 .pipe(
+                  map( countries => countries.map( country => ({
+                      name: country.name.common,
+                      cca3: country.cca3,
+                      borders: country.borders ?? []
+                  }))
+                  ),
                   tap( response => console.log("tap desde service",response))
                 );
 
