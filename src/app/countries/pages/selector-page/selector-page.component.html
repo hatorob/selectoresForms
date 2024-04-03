@@ -25,7 +25,7 @@
   </div>
 
   <!-- Borders -->
-  <div class="row mb-3" *ngIf="bordersByCountry">
+  <div class="row mb-3" *ngIf="bordersByCountry.length > 0">
     <div class="col">
       <label class="form-label"> Fronteras: </label>
       <select formControlName="border" class="form-control">

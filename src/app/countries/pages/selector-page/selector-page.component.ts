@@ -18,7 +18,7 @@ export class SelectorPageComponent implements OnInit {
   })
 
   public countriesByRegion: SmallCountry[] = [];
-  public bordersByCountry!: string[];
+  public bordersByCountry: string[] = [];
 
   //! Injectación de FormBuilder para trabajar más comodo formsReactives
   constructor(
@@ -44,6 +44,7 @@ export class SelectorPageComponent implements OnInit {
     this.myForm.get('region')!.valueChanges
         .pipe(
           tap( () => this.myForm.get('country')!.setValue('')),
+          tap( () => this.bordersByCountry = []),
           //switchMap( region => this.countriesServices.getCountriesByRegion(region) )
           switchMap( this.countriesServices.getCountriesByRegion )
         )
@@ -62,7 +63,6 @@ export class SelectorPageComponent implements OnInit {
           switchMap( this.countriesServices.getCountryByCode )
         )
         .subscribe( country => {
-          //console.log({borders});
           this.bordersByCountry = country.borders;
         });
   }
